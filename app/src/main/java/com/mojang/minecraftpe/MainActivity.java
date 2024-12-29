@@ -1,5 +1,40 @@
 package com.mojang.minecraftpe;
 
+// [Previous imports remain the same]
+
+public abstract class MainActivity extends NativeActivity {
+    // Add version constants at the top
+    public static final String VERSION_NAME = "1.21.50";
+    public static final int VERSION_CODE = 1021050;
+    
+    // Static block for native library
+    static {
+        System.loadLibrary("minecraftpe");
+    }
+
+    // Add version methods
+    public String getMinecraftVersion() {
+        return VERSION_NAME;
+    }
+
+    public int getMinecraftVersionCode() {
+        return VERSION_CODE;
+    }
+
+    // [Rest of the existing code remains the same]
+
+    // Update createAndroidLaunchIntent method
+    public Intent createAndroidLaunchIntent() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setAction("android.intent.action.MAIN");
+        intent.addCategory("android.intent.category.LAUNCHER");
+        return intent;
+    }
+
+    // [Rest of the existing code remains unchanged]
+}
+
+
 import android.accessibilityservice.AccessibilityServiceInfo;
 import android.annotation.TargetApi;
 import android.app.ActivityManager;
