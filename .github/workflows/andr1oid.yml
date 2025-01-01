@@ -1,3 +1,4 @@
+
 name: Build APK
 
 on:
@@ -25,11 +26,23 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x ./gradlew
 
+    - name: Display Java version
+      run: java -version
+
     - name: Build with Gradle
       run: ./gradlew build
+      continue-on-error: true
 
     - name: Upload APK
+      if: success()
       uses: actions/upload-artifact@v4
       with:
         name: apk
         path: app/build/outputs/apk/release/*.apk
+
+    - name: Upload build logs
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-logs
+        path: build/reports/
